@@ -12,22 +12,37 @@ export const TEMP_FACTORS: Record<string, Record<number, number>> = {
   XLPE: { 10: 1.15, 15: 1.12, 20: 1.08, 25: 1.04, 30: 1.00, 35: 0.96, 40: 0.91, 45: 0.87, 50: 0.82, 55: 0.76, 60: 0.71, 65: 0.65, 70: 0.58, 75: 0.50, 80: 0.41 }
 };
 
-export const GROUPING_FACTORS: Record<number, number> = {
-  1: 1.00, 2: 0.80, 3: 0.70, 4: 0.65, 5: 0.60, 6: 0.57, 7: 0.54, 8: 0.52, 9: 0.50, 12: 0.45, 16: 0.41
-};
+export const GROUPING_LIST = [
+  { count: 1, factor: 1.00, label: '1 Circuito (K2=1.00)' },
+  { count: 2, factor: 0.80, label: '2 Circuitos (K2=0.80)' },
+  { count: 3, factor: 0.70, label: '3 Circuitos (K2=0.70)' },
+  { count: 4, factor: 0.65, label: '4 Circuitos (K2=0.65)' },
+  { count: 5, factor: 0.60, label: '5 Circuitos (K2=0.60)' },
+  { count: 6, factor: 0.57, label: '6 Circuitos (K2=0.57)' },
+  { count: 7, factor: 0.54, label: '7 Circuitos (K2=0.54)' },
+  { count: 8, factor: 0.52, label: '8 Circuitos (K2=0.52)' },
+  { count: 9, factor: 0.50, label: '9 Circuitos (K2=0.50)' },
+  { count: 12, factor: 0.45, label: '12 Circuitos (K2=0.45)' },
+  { count: 16, factor: 0.41, label: '16 Circuitos (K2=0.41)' },
+];
+
+export const GROUPING_FACTORS: Record<number, number> = GROUPING_LIST.reduce((acc, item) => {
+  acc[item.count] = item.factor;
+  return acc;
+}, {} as Record<number, number>);
 
 export const SIMULTANEITY_803A = [
-  { range: '1', factor: 1.00 },
-  { range: '2 a 4', factor: 1.00 },
-  { range: '5 a 9', factor: 0.75 },
-  { range: '10 a 14', factor: 0.56 },
-  { range: '15 a 19', factor: 0.48 },
-  { range: '20 a 24', factor: 0.43 },
-  { range: '25 a 29', factor: 0.40 },
-  { range: '30 a 34', factor: 0.38 },
-  { range: '35 a 39', factor: 0.37 },
-  { range: '40 a 49', factor: 0.36 },
-  { range: '≥ 50', factor: 0.34 },
+  { range: '1 Inst.', factor: 1.00 },
+  { range: '2 a 4 Inst.', factor: 1.00 },
+  { range: '5 a 9 Inst.', factor: 0.75 },
+  { range: '10 a 14 Inst.', factor: 0.56 },
+  { range: '15 a 19 Inst.', factor: 0.48 },
+  { range: '20 a 24 Inst.', factor: 0.43 },
+  { range: '25 a 29 Inst.', factor: 0.40 },
+  { range: '30 a 34 Inst.', factor: 0.38 },
+  { range: '35 a 39 Inst.', factor: 0.37 },
+  { range: '40 a 49 Inst.', factor: 0.36 },
+  { range: '≥ 50 Inst.', factor: 0.34 },
 ];
 
 export const TABLE_REFERENCES: Record<string, string> = {
@@ -37,7 +52,6 @@ export const TABLE_REFERENCES: Record<string, string> = {
   [InstallationMethod.E]: "52-C10", [InstallationMethod.F]: "52-C11",
 };
 
-// Quadro 803C - Diâmetros de tubos (Secção -> Num Condutores -> Diâmetro mm)
 export const TUBE_DIAMETERS_803C: Record<number, Record<number, number>> = {
   1.5:  { 3: 16, 5: 20 },
   2.5:  { 3: 20, 5: 25 },

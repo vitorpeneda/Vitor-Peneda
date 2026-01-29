@@ -14,6 +14,11 @@ export enum MaterialType {
   ALUMINUM = 'Alumínio (Al)'
 }
 
+export enum UsageType {
+  LIGHTING = 'Iluminação (3%)',
+  POWER = 'Outros Usos / Força (5%)'
+}
+
 export enum InstallationMethod {
   A1 = 'A1 - Condutores isolados em tubos em parede isolante',
   A2 = 'A2 - Cabo multicondutor em tubo em parede isolante',
@@ -31,16 +36,17 @@ export interface Circuit {
   destination: string;
   apparentPowerKVA: number;
   simultaneityFactor: number;
-  powerFactor: number; // Cosseno de Phi
-  voltage: number; // 230 ou 400
+  powerFactor: number;
+  voltage: number;
   phase: PhaseType;
   insulation: InsulationType;
   material: MaterialType;
   method: InstallationMethod;
+  usage: UsageType; // NOVO
   length: number;
-  manualFC: number; // Fator de Correção definido pelo utilizador
-  ambientTemp: number; // Mantido para referência interna
-  groupingCount: number; // Mantido para referência interna
+  ambientTemp: number; // AGORA ATIVO
+  groupingCount: number; // AGORA ATIVO
+  hasHarmonics: boolean; // NOVO
 }
 
 export interface DimensioningResult {
@@ -48,16 +54,16 @@ export interface DimensioningResult {
   cableLabel: string;
   scFase: number;
   scNeutro: number;
+  scTerra: number; // NOVO
   izFase: number;
-  izNeutro: number;
   izCorrected: number;
   fc: number;
   i2CheckValue: number;
   critPhase: string;
-  critNeutro: string;
   protectionIn: number;
   voltageDropV: number;
   voltageDropP: number;
+  maxDeltaU: number; // NOVO
   tubeDiameter: number; 
   tableRef: string;
 }
